@@ -1,17 +1,12 @@
-import os
 import subprocess
-os.system("ls")
-print("--------------------------------------------------------------------------------------")
-subprocess.run(["ls","-l"])
+nombre_archivo = input("Ingrese el nombre del archivo a filtrar: ")
 
-print("--------------------------------------------------------------------------------------")
-command="uname"
-commandArgument="-a"
-print(f'Gathering system information with command: {command} {commandArgument}')
-subprocess.run([command,commandArgument])
-print("--------------------------------------------------------------------------------------")
+comando = f"ls | grep {nombre_archivo}"
 
-command="ps"
-commandArgument="-x"
-print(f'Gathering active process information with command: {command} {commandArgument}')
-subprocess.run([command,commandArgument])
+resultado = subprocess.run(comando, capture_output=True, text=True, shell=True)
+
+
+if resultado.returncode == 0:
+    print(resultado.stdout)
+else:
+    print(resultado.stderr)
